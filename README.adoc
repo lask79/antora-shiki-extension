@@ -1,4 +1,4 @@
-= Antora Highlight.js Extension
+= Antora Shiki Extension
 :url-repo: https://github.com/lask79/antora-shiki-extension
 :url-antora-docs: https://docs.antora.org/antora/3.1
 :toc: preamble
