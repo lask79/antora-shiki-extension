@@ -85,25 +85,19 @@ antora:
 .Page level theme definition
 [source,asciidoc]
 -------
-:shiki-theme: dracula #<1>
-[source,javascript]
+[source,javascript,theme=dracula]
 ----
 function helloWorld() {
   console.log('Hello World');
 }
 ----
-:!shiki-theme: #<2>
 -------
-<1> first you have to define the theme before your source block.
-<2> To set it back to default you have to set the theme to `!shiki-theme:`
 
 .Result
-[source,javascript]
+[source,javascript,theme=dracula]
 ----
 include::example$javascript.js[]
 ----
-
-:!shiki-theme:
 
 === Enable line numbers on source block
 

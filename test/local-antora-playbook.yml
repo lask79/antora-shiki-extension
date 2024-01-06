@@ -39,6 +39,6 @@ antora:
       # theme: "slack-dark"
       theme: "dracula"
       # theme: "nord"
-      # themes: ["dracula", "slack-dark", "github-light"]
+      themes: ["dracula", "slack-dark", "github-light"]
       # theme: "github-light"
       # languages: ["java", "js", "shell", "bash", "console", "zsh", "yaml", "xml", "diff"]

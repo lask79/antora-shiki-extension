@@ -260,8 +260,6 @@ antora:
       theme: 'dracula'
 ----
 
-:shiki-theme: dracula
-
 .Result
 image::dracula-default.png[]
 
@@ -295,25 +293,19 @@ antora:
     - require: 'antora-shiki-extension'
 ----
 
-.Page level theme definition
+.Source Block theme definition
 [source,asciidoc]
 -------
-:shiki-theme: dracula #<1>
-[source,javascript]
+[source,javascript,theme=dracula]
 ----
 function helloWorld() {
   console.log('Hello World');
 }
 ----
-:!shiki-theme: #<2>
 -------
-<1> first you have to define the theme before your source block.
-<2> To set it back to default you have to set the theme to `!shiki-theme:`
 
 .Result
 image::dracula-single-block.png[]
-
-:!shiki-theme:
 
 === Enable line numbers on source block
 
@@ -354,13 +346,10 @@ antora:
 :shiki-line-numbers: true
 ----
 
-:shiki-line-numbers: true
 .Result
 image::linenumbers.png[]
 
 You can also unset it via `!shiki-line-numbers:` like the theme.
-
-:!shiki-line-numbers:
 
 === Enable line numbers on all pages
 
