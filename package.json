@@ -1,0 +1,90 @@
+{
+  "name": "antora-shiki-extension",
+  "version": "1.0.0-alpha.1",
+  "description": "An antora extension to use shiki as a build-time syntax highligher.",
+  "author": "Lasse Knudsen <lasse.knudsen79@gmail.com>",
+  "main": "lib/index.js",
+  "exports": {
+    ".": "./lib/index.js",
+    "./package.json": "./package.json"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lask79/antora-shiki-extension"
+  },
+  "bugs": {
+    "url": "https://github.com/lask79/antora-shiki-extension/issues"
+  },
+  "engines": {
+    "node": ">=16.0.0"
+  },
+  "scripts": {
+    "test": "_mocha",
+    "clean-build": "rm -rf .cache; rm -rf public; npm run build",
+    "build": "cross-env DOCSEARCH_ENABLED=true DOCSEARCH_ENGINE=lunr npx antora test/local-antora-playbook.yml --stacktrace",
+    "preview": "npm run build; http-server test/public -c-1",
+    "preview-test": "http-server test/work/public -c-1",
+    "coverage": "npx nyc npm t",
+    "postpublish": "npx -y downdoc --postpublish",
+    "prepublishOnly": "npx -y downdoc --prepublish"
+  },
+  "files": [
+    "data",
+    "lib"
+  ],
+  "keywords": [
+    "antora",
+    "shiki",
+    "extension",
+    "highliging",
+    "syntax highligher"
+  ],
+  "license": "MPL-2.0",
+  "devDependencies": {
+    "@antora/cli": "^3.1.7",
+    "@antora/site-generator": "^3.1.7",
+    "@asciidoctor/core": "~2.2",
+    "chai": "~4.3",
+    "chai-as-promised": "~7.1.1",
+    "chai-fs": "~2.0",
+    "cheerio": "1.0.0-rc.12",
+    "cross-env": "^7.0.3",
+    "dirty-chai": "~2.0",
+    "eslint": "~7.32",
+    "eslint-config-standard": "~16.0",
+    "http-server": "^0.12.3",
+    "mocha": "~9.2",
+    "nyc": "~15.1",
+    "prettier-eslint": "~13.0",
+    "stylelint": "^14.12.1",
+    "stylelint-config-standard": "^28.0.0"
+  },
+  "dependencies": {
+    "@browserify/uglifyify": "~6.0.0",
+    "asciidoctor-external-callout": "^1.2.1",
+    "browser-pack-flat": "~3.4",
+    "browserify": "~17.0.0",
+    "handlebars": "^4.7.8",
+    "shiki": "0.14.7",
+    "jsdom": "~17.0"
+  },
+  "peerDependencies": {
+    "@asciidoctor/core": "~ 2.2"
+  },
+  "nyc": {
+    "cache": true,
+    "cacheDir": "node_modules/.cache/nyc",
+    "include": [
+      "lib/*.js"
+    ],
+    "reporter": [
+      "cobertura",
+      "lcov",
+      "text"
+    ],
+    "reportDir": "reports"
+  },
+  "workspaces": [
+    "."
+  ]
+}

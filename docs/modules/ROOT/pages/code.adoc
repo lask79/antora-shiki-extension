@@ -1,0 +1,196 @@
+= Source Code
+:page-editable: true
+:sectnums:
+
+== Use Cases
+
+The following use cases will be shown:
+
+* Default usage with default theme: `nord`
+* Change default theme to `darcula` in `Antora` playbook
+* Change theme on page level
+* Change theme on single source block
+* Enable line numbers on source block
+* Enable line numbers on all pages
+* Enable line numbers on specific page
+
+=== Default usage with default theme: nord
+
+.Antora Playbook
+[source,yaml]
+----
+antora:
+  extensions:
+    - require: 'antora-shiki-extension'
+----
+
+.Result
+[source,javascript]
+-------
+include::example$javascript.js[]
+-------
+
+=== Change default theme to `darcula` in `Antora` playbook
+
+.Antora Playbook
+[source,yaml]
+----
+antora:
+  extensions:
+    - require: 'antora-shiki-extension'
+      theme: 'dracula'
+----
+
+:shiki-theme: dracula
+
+.Result
+[source,javascript]
+----
+include::example$javascript.js[]
+----
+
+=== Change theme on page level
+
+.Antora Playbook
+[source,yaml]
+----
+antora:
+  extensions:
+    - require: 'antora-shiki-extension'
+----
+
+.Page level theme definition
+[source,asciidoc]
+----
+= Page Title
+:shiki-theme: dracula
+----
+
+.Result
+[source,javascript]
+----
+include::example$javascript.js[]
+----
+
+=== Change theme on single source block
+
+.Antora Playbook
+[source,yaml]
+----
+antora:
+  extensions:
+    - require: 'antora-shiki-extension'
+----
+
+.Page level theme definition
+[source,asciidoc]
+-------
+:shiki-theme: dracula #<1>
+[source,javascript]
+----
+function helloWorld() {
+  console.log('Hello World');
+}
+----
+:!shiki-theme: #<2>
+-------
+<1> first you have to define the theme before your source block.
+<2> To set it back to default you have to set the theme to `!shiki-theme:`
+
+.Result
+[source,javascript]
+----
+include::example$javascript.js[]
+----
+
+:!shiki-theme:
+
+=== Enable line numbers on source block
+
+.Antora Playbook
+[source,yaml]
+----
+antora:
+  extensions:
+    - require: 'antora-shiki-extension'
+----
+
+[source,asciidoc]
+-------
+[source,javascript,linenums]
+----
+function helloWorld() {
+  console.log('Hello World');
+}
+----
+-------
+
+.Result
+[source,javascript,linenums]
+-------
+include::example$javascript.js[]
+-------
+
+=== Enable line numbers on specific page
+
+.Antora Playbook
+[source,yaml]
+----
+antora:
+  extensions:
+    - require: 'antora-shiki-extension'
+----
+
+[source,asciidoc]
+----
+= Page Title
+:shiki-line-numbers: true
+----
+
+:shiki-line-numbers: true
+.Result
+[source,javascript]
+-------
+include::example$javascript.js[]
+-------
+
+You can also unset it via `!shiki-line-numbers:` like the theme.
+
+:!shiki-line-numbers:
+
+=== Enable line numbers on all pages
+
+.Antora Playbook
+[source,yaml]
+----
+antora:
+  extensions:
+    - require: 'antora-shiki-extension'
+      use_line_numbers: true
+----
+
+=== Line numbers with specific beginning
+
+.Antora Playbook
+[source,yaml]
+----
+antora:
+  extensions:
+    - require: 'antora-shiki-extension'
+----
+
+[source,asciidoc]
+-------
+[source,javascript,linenums,start=2]
+----
+function helloWorld() {
+  console.log('Hello World');
+}
+----
+-------
+
+.Result
+[source,javascript,linenums,start=2]
+-------
+include::example$javascript.js[]
+-------

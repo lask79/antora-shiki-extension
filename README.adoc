@@ -1,0 +1,411 @@
+= Antora Highlight.js Extension
+:url-repo: https://github.com/lask79/antora-shiki-extension
+:url-antora-docs: https://docs.antora.org/antora/3.1
+:toc: preamble
+:toc-title: Contents
+:sectnums:
+:imagesdir: docs/modules/ROOT/images
+
+:shiki: https://github.com/shikijs/shiki/[Shiki]
+:shiki-themes: https://github.com/shikijs/shiki/blob/main/docs/themes.md[Shiki Themes]
+:shiki-languages: https://github.com/shikijs/shiki/blob/main/docs/languages.md[Shiki Languages]
+
+:highlight-js: https://highlightjs.org/[Highlight.js]
+:asciidoctor-vscode: https://github.com/asciidoctor/asciidoctor-vscode[Asciidoctor VS Code Extension]
+
+image::https://img.shields.io/npm/v/antora-shiki-extension.svg[NPM version]
+
+== Features
+
+image::full-feature.png[]
+
+This extension wants to make it easier to use {shiki} in {url-antora-docs}[Antora] projects. It offers the following features:
+
+[%header,cols="1s,2a"]
+|===
+|Feature |Description
+
+|Build-time rendering
+|When `Antora` renders the site it will already have the syntax highlighted code blocks. No javascript needed on client.
+
+|Full Shiki Support
+|
+All {shiki-languages} and {shiki-themes} are supported.
+
+|Adds Asciidoc grammar to Shiki
+|Shiki does not offer an Asciidoc grammar. This extension adds the Asciidoc grammar to Shiki which is used by the {asciidoctor-vscode}.
+
+|Multi-Theme Support
+|You can define a different theme for each page or even multiple themes on one page.
+
+|Line Numbering
+|You can enable line numbering for each code block or for all pages by supporting the line number capabilities of https://docs.asciidoctor.org/asciidoc/latest/verbatim/source-highlighter/#enable-line-numbering[Asciidoctor]
+
+|Dynamic Line Number color
+|Depending on the used background color of the theme the line number color will be adjusted to be better readable.
+
+|===
+
+== Why Shiki instead of Highlight.js?
+
+{shiki} is a syntax highlighter powered by the same language grammars used in Visual Studio Code, ensuring accurate and consistent code coloring.
+It offers a wide range of themes and can tokenize code in any language that VS Code supports, making it highly versatile. Unlike many highlighters, Shiki pre-processes code into colored HTML at build time, offering improved performance and consistency across different environments.
+
+*Benefits*
+
+* *Accurate Syntax Highlighting*: Shiki uses the same language grammars as Visual Studio Code, ensuring highly accurate and consistent syntax highlighting.
+
+* *Build-Time Rendering*: Shiki processes code into colored HTML at build time, which can improve page load performance and ensures consistent rendering across different browsers and environments.
+
+* *Wide Range of Themes*: Shiki supports a broad array of themes directly from Visual Studio Code, offering more variety and customization options.
+
+* *Consistent with VS Code*: Developers familiar with Visual Studio Code will find Shiki's highlighting consistent with their development environment, making it easier to integrate into documentation or blogs.
+
+* *Extensive Language Support*: Shiki can tokenize code in any language supported by VS Code, offering extensive language support.
+
+* *Minimal Client-Side Processing*: Since Shiki does the heavy lifting at build time, there is minimal processing required on the client-side, leading to better performance especially on less powerful devices.
+
+
+== Prerequisites
+
+In order to use this extension, you must be using at least Node.js 16 and Antora 3.
+We assume you've already set up an Antora playbook file (i.e., _antora-playbook.yml_) to build your site.
+
+== Installation
+
+Begin by installing the extension package into your {url-antora-docs}/playbook/use-an-existing-playbook-project/[playbook project]:
+
+[source, console]
+----
+$ npm i antora-shiki-extension
+----
+
+== Usage
+
+=== Register the extension
+
+After installing the shiki extension package, you need to {url-antora-docs}/extend/register-extension/[register the extension] with Antora.
+
+To register the extension, you'll add an entry that cites the name of the package to the `antora.extensions` key in your {url-antora-docs}/playbook/[Antora playbook file].
+
+Open the Antora playbook file and add the extension as follows:
+
+.antora-playbook.yml
+[source,yaml]
+----
+antora:
+  extensions:
+    - 'antora-shiki-extension'
+----
+
+In order to specify configuration keys for the extension, you must change the entry to a map syntax.
+When using the map syntax, the package name must be preceded by the `require` key, as shown here:
+
+.antora-playbook.yml
+[source,yaml]
+----
+antora:
+  extensions:
+  - require: 'antora-vscode-extension'
+----
+
+You may want to start with this syntax so you don't have to remember to switch to it later when you want to specify configuration.
+
+=== Add handlebars templates
+
+You have to change to add 1 file in your Antora UI bundle or by overwriting it via supplemental-ui:
+
+* add `{{> shiki-styles }}` to `partials/head-styles.hbs`
+
+==== Add to head-styles.hbs
+
+.head-styles.hbs
+[source,html]
+----
+<link rel="stylesheet" href="{{{uiRootPath}}}/css/site.css">
+{{> shiki-styles }}
+----
+
+`{{> shiki-styles }}` will be replaced with the content of the file `shiki-styles.hbs` that provided by this extension.
+
+.shiki-styles.hbs
+[source,html]
+----
+<link rel="stylesheet" href="{{{uiRootPath}}}/css/shiki.css">
+----
+
+The `shiki.css` file contains some shiki specific styles that are needed to render the code blocks correctly and overrides some styles defined in the https://docs.antora.org/antora-ui-default/[Antora UI Default].
+
+== Configuration
+
+.Minimal extension configuration
+[source,yaml]
+----
+antora:
+  extensions:
+    - require: 'antora-shiki-extension'
+      # theme: nord
+      # themes: []
+      # languages: ["asciidoc", "bash", "console", "diff", "java", "js", "shell", "yaml", "xml", "zsh"]
+      # use_line_numbers: false
+----
+
+.Full extension configuration
+[source,yaml]
+----
+antora:
+  extensions:
+    - require: "antora-shiki-extension"
+      theme: "darcula" # default: "nord"
+      themes: ["material-theme", "dracula", "slack-dark", "github-light"] # default: []
+      languages: # default: see this list
+        - asciidoc
+        - bash
+        - console
+        - diff
+        - java
+        - js
+        - shell
+        - xml
+      use_line_numbers: true # default: false
+----
+
+=== Overview
+
+[%header,cols="1s,2a"]
+|===
+|Configuration key | Details
+
+|theme
+|Default: `nord`
+Set the default theme that should be used when no theme is defined on the asciidoc pages.
+
+|themes
+|Default: []
+
+Defines all themes that should be loaded into the highlighter.
+Those can then be used on the asciidoc pages by defining the `shiki-theme` attribute.
+
+|languages
+|Default: `["asciidoc", "bash", "console", "diff", "java", "js", "shell", "yaml", "xml", "zsh"]`
+
+Defines which languages are known to `shiki`.
+
+|use_line_numbers
+|Default: `false`
+
+If set to true it will always use line numbers for all code blocks.
+
+You can also enable line numbers for each code block. Check https://docs.asciidoctor.org/asciidoc/latest/verbatim/source-highlighter/#enable-line-numbering[here].
+
+|===
+
+=== Examples
+
+== How it works
+
+=== Process
+
+The extension is called by Antora during the build process. It will then do the following steps:
+
+* validate the configuration
+* create the shiki syntax highlighter
+* create the asciidoctor syntax highlighter for shiki and register it.
+* pass the extension context (logger, config, etc.) to the asciidoctor syntax highlighter
+* copy the shiki.css to the uiCatalog
+* copy the shiki-styles.hbs to the uiCatalog
+* renders each asciidoc page with source blocks (ShikiSyntaxHighlighter)
+** calculate the current theme based on the page attributes (`shiki-theme`) and the configuration
+** generate the html code for the source block by using the shiki highligher
+** extract the background color that is provided by the theme and stored on the returned <pre> element
+** calculate if line numbers should be used.
+** calculate the line number color based on the background color
+** remove the generated surrounding `<pre><code>` elements.
+** create new `<pre><code>` elements with the calculated background color and the generated html code
+*** sets css variables on <pre>: `--shiki-background-color`
+
+== Use Cases
+
+The following use cases will be shown:
+
+* Default usage with default theme: `nord`
+* Change default theme to `darcula` in `Antora` playbook
+* Change theme on page level
+* Change theme on single source block
+* Enable line numbers on source block
+* Enable line numbers on specific page
+* Enable line numbers on all pages
+* Line numbers with specific beginning
+
+=== Default usage with default theme: nord
+
+.Antora Playbook
+[source,yaml]
+----
+antora:
+  extensions:
+    - require: 'antora-shiki-extension'
+----
+
+image::
+
+=== Change default theme to `darcula` in `Antora` playbook
+
+.Antora Playbook
+[source,yaml]
+----
+antora:
+  extensions:
+    - require: 'antora-shiki-extension'
+      theme: 'dracula'
+----
+
+:shiki-theme: dracula
+
+.Result
+image::nord-default.png[]
+
+=== Change theme on page level
+
+.Antora Playbook
+[source,yaml]
+----
+antora:
+  extensions:
+    - require: 'antora-shiki-extension'
+----
+
+.Page level theme definition
+[source,asciidoc]
+----
+= Page Title
+:shiki-theme: dracula
+----
+
+.Result
+image::dracula-default.png[]
+
+=== Change theme on single source block
+
+.Antora Playbook
+[source,yaml]
+----
+antora:
+  extensions:
+    - require: 'antora-shiki-extension'
+----
+
+.Page level theme definition
+[source,asciidoc]
+-------
+:shiki-theme: dracula #<1>
+[source,javascript]
+----
+function helloWorld() {
+  console.log('Hello World');
+}
+----
+:!shiki-theme: #<2>
+-------
+<1> first you have to define the theme before your source block.
+<2> To set it back to default you have to set the theme to `!shiki-theme:`
+
+.Result
+image::dracula-single-block.png[]
+
+:!shiki-theme:
+
+=== Enable line numbers on source block
+
+.Antora Playbook
+[source,yaml]
+----
+antora:
+  extensions:
+    - require: 'antora-shiki-extension'
+----
+
+[source,asciidoc]
+-------
+[source,javascript,linenums]
+----
+function helloWorld() {
+  console.log('Hello World');
+}
+----
+-------
+
+.Result
+image::linenumbers.png[]
+
+=== Enable line numbers on specific page
+
+.Antora Playbook
+[source,yaml]
+----
+antora:
+  extensions:
+    - require: 'antora-shiki-extension'
+----
+
+[source,asciidoc]
+----
+= Page Title
+:shiki-line-numbers: true
+----
+
+:shiki-line-numbers: true
+.Result
+image::linenumbers.png[]
+
+You can also unset it via `!shiki-line-numbers:` like the theme.
+
+:!shiki-line-numbers:
+
+=== Enable line numbers on all pages
+
+.Antora Playbook
+[source,yaml]
+----
+antora:
+  extensions:
+    - require: 'antora-shiki-extension'
+      use_line_numbers: true
+----
+
+=== Line numbers with specific beginning
+
+.Antora Playbook
+[source,yaml]
+----
+antora:
+  extensions:
+    - require: 'antora-shiki-extension'
+----
+
+[source,asciidoc]
+-------
+[source,javascript,linenums,start=2]
+----
+function helloWorld() {
+  console.log('Hello World');
+}
+----
+-------
+
+.Result
+image::linenumbers-start.png[]
+
+== More informations
+
+* https://shiki-play.matsu.io/play[Playground for Shiki Themes]. Please check it out if you want to know what is possible.
+
+== Acknowledgements
+
+* https://gitlab.com/antora/antora-lunr-extension[antora-lunr-extension] that helped me to understand how to write an Antora extension and offered me a lot of inspiration.
+* {shiki} project for their great work
+* https://github.com/shikijs/shiki/issues/3[Shiki PR] that describes how create line numbers via css.
+
+== Trademarks
+
+AsciiDoc(R) is a trademark of the Eclipse Foundation, Inc.

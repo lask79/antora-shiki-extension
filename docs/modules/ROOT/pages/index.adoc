@@ -1,0 +1,9 @@
+= Index
+:shiki-theme: slack-dark
+
+[source,javascript,linenums,start=2]
+-------
+include::example$bigger-js.js[]
+-------
+<1> Shows the conum 1
+<2> Explains conum 2

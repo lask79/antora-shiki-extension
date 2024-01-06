@@ -1,0 +1,5 @@
+name: shiki
+title: Antora Shiki Example
+version: ~
+nav:
+- modules/ROOT/nav.adoc
