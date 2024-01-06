@@ -247,7 +247,7 @@ antora:
     - require: 'antora-shiki-extension'
 ----
 
-image::
+image::nord-default.png[]
 
 === Change default theme to `darcula` in `Antora` playbook
 
@@ -263,7 +263,7 @@ antora:
 :shiki-theme: dracula
 
 .Result
-image::nord-default.png[]
+image::dracula-default.png[]
 
 === Change theme on page level
 
