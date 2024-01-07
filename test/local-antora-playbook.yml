@@ -35,10 +35,8 @@ asciidoc:
 antora:
   extensions:
     - require: "antora-shiki-extension"
-      # use_line_numbers: true
-      # theme: "slack-dark"
-      theme: "dracula"
-      # theme: "nord"
+      use_line_numbers: false
+      theme: "nord"
       themes: ["dracula", "slack-dark", "github-light"]
       # theme: "github-light"
       # languages: ["java", "js", "shell", "bash", "console", "zsh", "yaml", "xml", "diff"]

@@ -95,8 +95,14 @@ Open the Antora playbook file and add the extension as follows:
 ----
 antora:
   extensions:
-    - 'antora-shiki-extension'
+    - 'antora-shiki-extension' #<1>
+
+asciidoc:
+  attributes:
+    source-highlighter: shiki #<2>
 ----
+<1> Register the antora extension
+<2> Set the source-highlighter to shiki
 
 In order to specify configuration keys for the extension, you must change the entry to a map syntax.
 When using the map syntax, the package name must be preceded by the `require` key, as shown here:
@@ -107,13 +113,18 @@ When using the map syntax, the package name must be preceded by the `require` ke
 antora:
   extensions:
   - require: 'antora-vscode-extension'
+
+asciidoc:
+  attributes:
+    source-highlighter: shiki
 ----
 
 You may want to start with this syntax so you don't have to remember to switch to it later when you want to specify configuration.
 
+
 === Add handlebars templates
 
-You have to change to add 1 file in your Antora UI bundle or by overwriting it via supplemental-ui:
+You have to change 1 file in your Antora UI bundle or by overwriting it via supplemental-ui:
 
 * add `{{> shiki-styles }}` to `partials/head-styles.hbs`
 
@@ -209,18 +220,17 @@ You can also enable line numbers for each code block. Check https://docs.asciido
 The extension is called by Antora during the build process. It will then do the following steps:
 
 * validate the configuration
-* create the shiki syntax highlighter
-* create the asciidoctor syntax highlighter for shiki and register it.
+* create the asciidoctor syntax highlighter for shiki and register it
 * pass the extension context (logger, config, etc.) to the asciidoctor syntax highlighter
 * copy the shiki.css to the uiCatalog
 * copy the shiki-styles.hbs to the uiCatalog
 * renders each asciidoc page with source blocks (ShikiSyntaxHighlighter)
 ** calculate the current theme based on the page attributes (`shiki-theme`) and the configuration
 ** generate the html code for the source block by using the shiki highligher
-** extract the background color that is provided by the theme and stored on the returned <pre> element
-** calculate if line numbers should be used.
+** get the background color from the used theme
+** calculate if line numbers should be used
 ** calculate the line number color based on the background color
-** remove the generated surrounding `<pre><code>` elements.
+** remove the generated surrounding `<pre><code>` elements
 ** create new `<pre><code>` elements with the calculated background color and the generated html code
 *** sets css variables on <pre>: `--shiki-background-color`
 
@@ -236,6 +246,8 @@ The following use cases will be shown:
 * Enable line numbers on specific page
 * Enable line numbers on all pages
 * Line numbers with specific beginning
+* Disable line numbers on single source block
+* Disable line numbers on specific page
 
 === Default usage with default theme: nord
 
@@ -360,6 +372,38 @@ antora:
   extensions:
     - require: 'antora-shiki-extension'
       use_line_numbers: true
+----
+
+=== Disable line numbers on single source block
+
+.Antora Playbook
+[source,yaml]
+----
+antora:
+  extensions:
+    - require: 'antora-shiki-extension'
+      use_line_numbers: true
+----
+
+[source,asciidoc]
+-------
+[source,javascript,nolinenums]
+----
+function helloWorld() {
+  console.log('Hello World');
+}
+----
+-------
+
+.Result
+image::nord-default.png[]
+
+=== Disable line numbers on specific page
+
+[source,asciidoc]
+----
+= Page Title
+:shiki-line-numbers: false
 ----
 
 === Line numbers with specific beginning

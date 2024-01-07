@@ -1,7 +1,10 @@
 = Index
 :shiki-theme: slack-dark
+:shiki-line-numbers: true
 
-[source,javascript,linenums,start=2]
+{shiki-line-numbers}
+
+[source,javascript,nolinenums]
 -------
 include::example$bigger-js.js[]
 -------

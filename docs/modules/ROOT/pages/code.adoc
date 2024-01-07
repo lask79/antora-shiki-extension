@@ -13,6 +13,8 @@ The following use cases will be shown:
 * Enable line numbers on source block
 * Enable line numbers on all pages
 * Enable line numbers on specific page
+* Disable line numbers on source block
+* Disable line numbers on specific page
 
 === Default usage with default theme: nord
 
@@ -41,10 +43,8 @@ antora:
       theme: 'dracula'
 ----
 
-:shiki-theme: dracula
-
 .Result
-[source,javascript]
+[source,javascript,theme=dracula]
 ----
 include::example$javascript.js[]
 ----
@@ -67,7 +67,7 @@ antora:
 ----
 
 .Result
-[source,javascript]
+[source,javascript,theme=dracula]
 ----
 include::example$javascript.js[]
 ----
@@ -141,16 +141,13 @@ antora:
 :shiki-line-numbers: true
 ----
 
-:shiki-line-numbers: true
 .Result
-[source,javascript]
+[source,javascript,linenums]
 -------
 include::example$javascript.js[]
 -------
 
 You can also unset it via `!shiki-line-numbers:` like the theme.
-
-:!shiki-line-numbers:
 
 === Enable line numbers on all pages
 
@@ -161,6 +158,41 @@ antora:
   extensions:
     - require: 'antora-shiki-extension'
       use_line_numbers: true
+----
+
+=== Disable line numbers on single source block
+
+.Antora Playbook
+[source,yaml]
+----
+antora:
+  extensions:
+    - require: 'antora-shiki-extension'
+      use_line_numbers: true
+----
+
+[source,asciidoc]
+-------
+[source,javascript,nolinenums]
+----
+function helloWorld() {
+  console.log('Hello World');
+}
+----
+-------
+
+.Result
+[source,javascript,nolinenums]
+-------
+include::example$javascript.js[]
+-------
+
+=== Disable line numbers on specific page
+
+[source,asciidoc]
+----
+= Page Title
+:shiki-line-numbers: false
 ----
 
 === Line numbers with specific beginning
