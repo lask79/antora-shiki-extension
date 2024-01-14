@@ -1,6 +1,6 @@
 {
   "name": "antora-shiki-extension",
-  "version": "1.0.0-alpha.5",
+  "version": "1.0.0-alpha.6",
   "description": "An antora extension to use shiki as a build-time syntax highligher.",
   "author": "Lasse Knudsen <lasse.knudsen79@gmail.com>",
   "main": "lib/index.js",
@@ -22,7 +22,7 @@
     "test": "_mocha",
     "clean-build": "rm -rf .cache; rm -rf public; npm run build",
     "build": "cross-env DOCSEARCH_ENABLED=true DOCSEARCH_ENGINE=lunr npx antora test/local-antora-playbook.yml --stacktrace",
-    "preview": "npm run build; http-server test/public -c-1",
+    "preview": "npm run clean-build; http-server test/public -c-1",
     "preview-test": "http-server test/work/public -c-1",
     "coverage": "npx nyc npm t",
     "postpublish": "npx -y downdoc --postpublish",

@@ -10,3 +10,10 @@ include::example$bigger-js.js[]
 -------
 <1> Shows the conum 1
 <2> Explains conum 2
+
+[source,xml]
+----
+<xml>
+  <tag>content</tag>
+</xml>
+----

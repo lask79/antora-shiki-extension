@@ -38,5 +38,10 @@ antora:
       use_line_numbers: false
       theme: "nord"
       themes: ["dracula", "slack-dark", "github-light"]
+      register_languages:
+        - id: 'xml'
+          scope_name: 'text.xml'
+          grammar_path: ./additional-languages/xml.tmLanguage.json
+          # aliases: ['css']
       # theme: "github-light"
-      # languages: ["java", "js", "shell", "bash", "console", "zsh", "yaml", "xml", "diff"]
+      languages: ["asciidoc", "java", "js", "shell", "bash", "console", "zsh", "yaml", "diff"]

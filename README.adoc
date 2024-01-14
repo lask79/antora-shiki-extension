@@ -35,6 +35,9 @@ All {shiki-languages} and {shiki-themes} are supported.
 |Adds Asciidoc grammar to Shiki
 |Shiki does not offer an Asciidoc grammar. This extension adds the Asciidoc grammar to Shiki which is used by the {asciidoctor-vscode}.
 
+|Supports custom grammar for Shiki
+|It is possible to register your own grammar files for languages.
+
 |Multi-Theme Support
 |You can define a different theme for each page or even multiple themes on one page.
 
@@ -170,14 +173,17 @@ antora:
       theme: "darcula" # default: "nord"
       themes: ["material-theme", "dracula", "slack-dark", "github-light"] # default: []
       languages: # default: see this list
-        - asciidoc
         - bash
         - console
         - diff
         - java
         - js
         - shell
-        - xml
+      register_languages: # default: []
+        - id: 'xml'
+          scope_name: 'text.xml'
+          grammar_path: ./relative-path-to-grammar-file
+          alias: ['xml']
       use_line_numbers: true # default: false
 ----
 
@@ -201,6 +207,32 @@ Those can then be used on the asciidoc pages by defining the `shiki-theme` attri
 |Default: `["asciidoc", "bash", "console", "diff", "java", "js", "shell", "yaml", "xml", "zsh"]`
 
 Defines which languages are known to `shiki`.
+
+NOTE: The id of the registered language must not be put into the `languages` array. The languages list is for defining the default languages provided by shiki. The `register_languages` array is for adding additional languages.
+
+|register_languages
+|Default: `[]`
+
+Defines an array of additional languages that should be registered to `shiki`.
+The array must contain objects with the following keys:
+
+id:: The id of the language
+
+scope_name:: The scope name of the language (see grammar file)
+
+grammar_path:: The path to the grammar file (relative to the playbook)
+
+alias (optional):: An array of aliases for the language (see grammar file or add additional)
+
+.Example
+----
+- id: 'xml'
+  scope_name: 'text.xml'
+  grammar_path: ./relative-path-to-grammar-file
+  alias: ['xml']
+----
+
+NOTE: The id of the registered language must not be put into the `languages` array. The languages list is for defining the default languages provided by shiki. The `register_languages` array is for adding additional languages.
 
 |use_line_numbers
 |Default: `false`
