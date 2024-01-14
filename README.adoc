@@ -115,7 +115,7 @@ When using the map syntax, the package name must be preceded by the `require` ke
 ----
 antora:
   extensions:
-  - require: 'antora-vscode-extension'
+  - require: 'antora-shiki-extension'
 
 asciidoc:
   attributes:
