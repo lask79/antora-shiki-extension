@@ -45,3 +45,7 @@ antora:
           # aliases: ['css']
       # theme: "github-light"
       languages: ["asciidoc", "java", "js", "shell", "bash", "console", "zsh", "yaml", "diff"]
+      conums_override: true            # Enable custom conum styling
+      # conums_bg_color: '#4a5568'        # Optional: Custom background color
+      # conums_fg_color: '#ffffff'        # Optional: Custom foreground color
+      conums_show_border: false     # Optional: Show border around conums (default: false)     

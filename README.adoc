@@ -47,6 +47,9 @@ All {shiki-languages} and {shiki-themes} are supported.
 |Dynamic Line Number color
 |Depending on the used background color of the theme the line number color will be adjusted to be better readable.
 
+|Customizable Callout Styling
+|Customize the appearance of callouts (conums) with theme-aware colors and optional borders. Colors automatically adjust based on the theme's background for optimal readability.
+
 |===
 
 == Why Shiki instead of Highlight.js?
@@ -68,6 +71,9 @@ It offers a wide range of themes and can tokenize code in any language that VS C
 
 * *Minimal Client-Side Processing*: Since Shiki does the heavy lifting at build time, there is minimal processing required on the client-side, leading to better performance especially on less powerful devices.
 
+
+NOTE: At the moment only Shiki in version 0.14.1 is supported. 
+We have to evaluate if the newer Shiki versions can be used as well.
 
 == Prerequisites
 
@@ -98,7 +104,7 @@ Open the Antora playbook file and add the extension as follows:
 ----
 antora:
   extensions:
-    - 'antora-shiki-extension' #<1>
+    - require: 'antora-shiki-extension' #<1>
 
 asciidoc:
   attributes:
@@ -122,8 +128,70 @@ asciidoc:
     source-highlighter: shiki
 ----
 
-You may want to start with this syntax so you don't have to remember to switch to it later when you want to specify configuration.
+=== Configuration Options
 
+The extension supports the following configuration options:
+
+[%header,cols="1,1,2"]
+|===
+|Option |Default |Description
+
+|theme
+|nord
+|The default theme to use for syntax highlighting
+
+|themes
+|[]
+|Additional themes to load
+
+|languages
+|[asciidoc, java, js, shell, bash, console, zsh, yaml, xml, diff]
+|Languages to support
+
+|use_line_numbers
+|false
+|Enable line numbers globally
+
+|conums_override
+|true
+|Enable custom styling for callouts (conums)
+
+|conums_bg_color
+|auto
+|Background color for callouts. If not specified, uses a dimmed version of the theme's foreground color
+
+|conums_fg_color
+|auto
+|Foreground color for callouts. If not specified, automatically chooses black or white based on background brightness
+
+|conums_show_border
+|false
+|Whether to show a border around callouts
+|===
+
+==== Callout Styling
+
+When `conums_override` is enabled (default), the extension provides theme-aware callout styling:
+
+* By default, callouts use a background color derived from the theme's foreground color
+* The text color is automatically chosen to ensure readability
+* Borders are disabled by default but can be enabled with `conums_show_border: true`
+* You can override both background and foreground colors using `conums_bg_color` and `conums_fg_color`
+
+Example configuration with custom colors:
+
+[source,yaml]
+----
+antora:
+  extensions:
+    - require: 'antora-shiki-extension'
+      conums_override: true             # Enable custom styling
+      conums_bg_color: '#4a5568'        # Dark slate background
+      conums_fg_color: '#ffffff'        # White text
+      conums_show_border: true          # Show borders
+----
+
+NOTE: If you simply want to use the callout style defined in your custom antora css please simply set `conums_override` to false.
 
 === Add handlebars templates
 
@@ -280,6 +348,57 @@ The following use cases will be shown:
 * Line numbers with specific beginning
 * Disable line numbers on single source block
 * Disable line numbers on specific page
+* Use custom CSS styling for callouts
+* Use theme-aware callout colors with border
+* Use custom callout colors
+* Use dark theme callout colors
+
+=== Use custom CSS styling for callouts
+
+.Antora Playbook
+[source,yaml]
+----
+antora:
+  extensions:
+    - require: 'antora-shiki-extension'
+      conums_override: false          # Use your custom CSS styling
+----
+
+=== Use theme-aware callout colors with border
+
+.Antora Playbook
+[source,yaml]
+----
+antora:
+  extensions:
+    - require: 'antora-shiki-extension'
+      conums_show_border: true        # Add borders to callouts
+----
+
+=== Use custom callout colors
+
+.Antora Playbook
+[source,yaml]
+----
+antora:
+  extensions:
+    - require: 'antora-shiki-extension'
+      conums_bg_color: '#2563eb'      # Blue background
+      conums_fg_color: '#ffffff'      # White text
+----
+
+=== Use dark theme callout colors
+
+.Antora Playbook
+[source,yaml]
+----
+antora:
+  extensions:
+    - require: 'antora-shiki-extension'
+      conums_bg_color: '#1e293b'      # Dark slate background
+      conums_fg_color: '#94a3b8'      # Light gray text
+      conums_show_border: true        # Add subtle border
+----
 
 === Default usage with default theme: nord
 
