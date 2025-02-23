@@ -25,3 +25,13 @@ code.shiki.has-line-numbers .line::before {
   padding: 0.6em;
   border-radius: 4px;
 }
+
+.doc pre.shiki > code.shiki.override-conums i.conum[data-value] {
+  color: var(--shiki-conum-fg-color);
+  background-color: var(--shiki-conum-bg-color);
+  border: none;
+}
+
+.doc pre.shiki > code.shiki.override-conums.with-conum-border i.conum[data-value] {
+  border: 1px solid;
+}

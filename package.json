@@ -1,6 +1,6 @@
 {
   "name": "antora-shiki-extension",
-  "version": "1.0.0-alpha.6",
+  "version": "1.0.0",
   "description": "An antora extension to use shiki as a build-time syntax highligher.",
   "author": "Lasse Knudsen <lasse.knudsen79@gmail.com>",
   "main": "lib/index.js",

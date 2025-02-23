@@ -23,8 +23,26 @@ The following use cases will be shown:
 ----
 antora:
   extensions:
-    - require: 'antora-shiki-extension'
+    - require: 'antora-shiki-extension' #<1>
 ----
+<1> test
+
+=== Default usage with default theme: nord and callouts
+
+.Antora Playbook
+[source,yaml,theme=github-light]
+----
+antora:
+  extensions:
+    - 'antora-shiki-extension' #<1>
+
+asciidoc:
+  attributes:
+    source-highlighter: shiki #<2>
+----
+<1> Register the antora extension
+<2> Set the source-highlighter to shiki
+<3> test
 
 .Result
 [source,javascript]
