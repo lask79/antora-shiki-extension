@@ -72,7 +72,7 @@ It offers a wide range of themes and can tokenize code in any language that VS C
 * *Minimal Client-Side Processing*: Since Shiki does the heavy lifting at build time, there is minimal processing required on the client-side, leading to better performance especially on less powerful devices.
 
 
-NOTE: At the moment only Shiki in version 0.14.1 is supported.
+NOTE: At the moment only Shiki in version 0.14.x is supported.
 We have to evaluate if the newer Shiki versions can be used as well.
 
 == Prerequisites
