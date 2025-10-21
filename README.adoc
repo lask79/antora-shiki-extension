@@ -276,7 +276,9 @@ Those can then be used on the asciidoc pages by defining the `shiki-theme` attri
 
 Defines which languages are known to `shiki`.
 
-NOTE: The id of the registered language must not be put into the `languages` array. The languages list is for defining the default languages provided by shiki. The `register_languages` array is for adding additional languages.
+NOTE: The id of the registered language must not be put into the `languages` array. +
+The languages list is for defining the default languages provided by shiki. +
+The `register_languages` array is for adding additional languages.
 
 |register_languages
 |Default: `[]`
@@ -300,7 +302,9 @@ alias (optional):: An array of aliases for the language (see grammar file or add
   alias: ['xml']
 ----
 
-NOTE: The id of the registered language must not be put into the `languages` array. The languages list is for defining the default languages provided by shiki. The `register_languages` array is for adding additional languages.
+NOTE: The id of the registered language must not be put into the `languages` array. +
+The languages list is for defining the default languages provided by shiki. +
+The `register_languages` array is for adding additional languages.
 
 |use_line_numbers
 |Default: `false`
